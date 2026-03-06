@@ -5,9 +5,14 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	// Load environment variables from .env file
+	godotenv.Load()
+
 	// Initialize Gin router
 	var router *gin.Engine = gin.Default()
 
