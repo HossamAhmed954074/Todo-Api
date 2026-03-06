@@ -10,7 +10,7 @@ type Config struct {
 	PORT         string
 }
 
-func Load() (*Config, error) {
+func LoadConfig() (*Config, error) {
 	if os.Getenv("DATABASE_URL") == "" {
 		return nil, errors.New("DATABASE_URL environment variable is not set")
 	}
