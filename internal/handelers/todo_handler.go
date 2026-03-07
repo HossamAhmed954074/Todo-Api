@@ -1,7 +1,7 @@
 package handelers
 
 import (
-	"context"
+	
 	"net/http"
 	"time"
 	"todo-api/internal/models"
@@ -13,6 +13,8 @@ import (
 type CreateTodoInput struct {
 	Title       string `json:"title" binding:"required"`
 	Description string `json:"description" binding:"required"`
+	Completed   bool   `json:"completed"`
+	
 }
 
 type TodoHandler struct {
@@ -32,12 +34,12 @@ func (h *TodoHandler) CreateTodo(c *gin.Context) {
 	todo := &models.Todo{
 		Title:       input.Title,
 		Description: input.Description,
-		Completed:   false,
+		Completed:   input.Completed,
 		CreatedAt:   time.Now(),
 		UpdatedAt:   time.Now(),
 		IsDeleted:   false,
 	}
-	newTodo, err := h.repo.CreateTodo(context.Background(), todo)
+	newTodo, err := h.repo.CreateTodo(c.Request.Context(), todo)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create todo"})
 		return
