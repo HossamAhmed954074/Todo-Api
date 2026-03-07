@@ -43,6 +43,7 @@ func main() {
 	})
 
 	router.POST("/todos", handelers.NewTodoHandler(repository.NewTodoRepository(pool)).CreateTodo)
+	router.DELETE("/todos/:id",handelers.NewTodoHandler(repository.NewTodoRepository(pool)).DeleteTodo)
 
 	if err := router.Run(":8000"); err != nil {
 		fmt.Printf("Failed to start server: %v\n", err)
