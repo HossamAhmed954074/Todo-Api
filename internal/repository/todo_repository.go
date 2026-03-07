@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 	"time"
 	"todo-api/internal/models"
 
@@ -63,7 +64,7 @@ func (r *TodoRepository) GetAllTodos(ctx context.Context) ([]*models.Todo, error
 		return nil, err
 	}
 	defer rows.Close()
-
+    fmt.Println("Query executed successfully, processing results... %v ", rows.Err())
 	var todos []*models.Todo
 	for rows.Next() {
 		var todo models.Todo

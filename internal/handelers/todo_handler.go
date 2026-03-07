@@ -74,3 +74,13 @@ func (h *TodoHandler) DeleteTodo(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "Todo deleted successfully"})
 }
+
+// get all todos
+func (h *TodoHandler) GetAllTodos(c *gin.Context) {
+	todos, err := h.repo.GetAllTodos(c.Request.Context())
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve todos"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": todos})
+}
