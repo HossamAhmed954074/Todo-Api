@@ -20,7 +20,8 @@ func (r *TodoRepository) CreateTodo(ctx context.Context, todo *models.Todo) (*mo
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	query := `INSERT INTO todos (title, description, completed, created_at, updated_at, is_deleted) 
-			  VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`
+          VALUES ($1, $2, $3, $4, $5, $6) 
+          RETURNING id, title, description, completed, created_at, updated_at, is_deleted`
 	var newTodo models.Todo
 	err := r.db.QueryRow(ctx, query, todo.Title, todo.Description, todo.Completed, todo.CreatedAt, todo.UpdatedAt, todo.IsDeleted).Scan(&newTodo.ID, &newTodo.Title, &newTodo.Description, &newTodo.Completed, &newTodo.CreatedAt, &newTodo.UpdatedAt, &newTodo.IsDeleted)
 	return &newTodo, err

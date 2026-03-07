@@ -5,6 +5,8 @@ import (
 	"log"
 	"todo-api/internal/config"
 	"todo-api/internal/database"
+	"todo-api/internal/handelers"
+	"todo-api/internal/repository"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -39,6 +41,8 @@ func main() {
 			"database": "connected",
 		})
 	})
+
+	router.POST("/todos", handelers.NewTodoHandler(repository.NewTodoRepository(pool)).CreateTodo)
 
 	if err := router.Run(":8000"); err != nil {
 		fmt.Printf("Failed to start server: %v\n", err)
